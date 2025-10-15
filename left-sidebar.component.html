@@ -1,0 +1,141 @@
+<div class="layout-wrapper">
+  <div class="left-sidebar filter" [class]="{ 'slide-in': showFilter, 'slide-out': !showFilter }">
+    <div class="filter-container">
+      <div id="left-sidebar-top"></div>
+      <button type="button" class="btn toggle-filter" (click)="toggleShowFilter()">
+        @if (!showFilter){
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="#fff" class="bi bi-filter" viewBox="0 0 16 16">
+            <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5" />
+          </svg>
+        } @else {
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="#fff" class="bi bi-x-lg" viewBox="0 0 16 16">
+            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+          </svg>
+        }
+      </button>
+
+      <!-- All Industries Section -->
+      @if (industry?.length !== 0 && industry[0]?.items?.length != 0) {
+        @if (industry.length !== 0) {
+          <div class="filter-section">
+            <div class="section-header">
+              <h3 class="section-title">All Industries</h3>
+            </div>
+            <dx-accordion #industryAccordion (onItemClick)="handleClick($event, 'I')" [dataSource]="industry" [collapsible]="true" [multiple]="false" [animationDuration]="300" [selectedIndex]="topicActive ? 0 : -1" id="accordion-container" class="modern-accordion">
+              <div class="filter-name" *dxTemplate="let item of 'title'">
+                @if (item.items && item.items.length > 0) {
+                  <div class="accordion-title-wrapper">
+                    <span class="accordion-title">{{ item.Name }}</span>
+                    @if (getLength(item.Name) !== 0) {
+                      <span class="filter-count">{{ getLength(item.Name) }}</span>
+                    }
+                  </div>
+                }
+              </div>
+              <div class="taxonomy_filtration_section" *dxTemplate="let elem of 'item'">
+                @if (elem.items && elem.items.length > 0) {
+                  <div class="subindustries-section">
+                    <h4 class="subindustries-title">Subindustries</h4>
+                    <dx-tree-view #treeview1 id="treeview" [items]="elem?.items" [showCheckBoxesMode]="'normal'" [selectionMode]="'multiple'" [selectNodesRecursive]="true" [selectByClick]="false" [searchEnabled]="true" [searchEditorOptions]="{ placeholder: 'Search within filters' }" searchMode="contains" [searchExpr]="['Name']" pageLoadMode="nextButton" (onSelectionChanged)="treeViewSelectionChanged($event, 'I')" (click)="ItemClicked($event)" [height]="300" class="modern-treeview">
+                      <div *dxTemplate="let item of 'item'" class="tree-item">
+                        {{ item.Name }}
+                      </div>
+                    </dx-tree-view>
+                  </div>
+                }
+              </div>
+            </dx-accordion>
+          </div>
+        }
+      }
+
+      <!-- Regions & Markets Section -->
+      @if (Region?.length !== 0 && Region[0]?.items?.length != 0) {
+        @if (Region.length !== 0) {
+          <div class="filter-section">
+            <dx-accordion #regionAccordion [dataSource]="Region" (onItemClick)="handleClick($event, 'R')" [collapsible]="true" [multiple]="false" [animationDuration]="300" [selectedIndex]="geographyActive ? 0 : -1" id="accordion-container" class="modern-accordion">
+              <div class="filter-name" *dxTemplate="let item of 'title'">
+                @if (item.items && item.items.length > 0) {
+                  <div class="accordion-title-wrapper">
+                    <span class="accordion-title">{{ item.Name }}</span>
+                    @if (getLength(item.Name) !== 0) {
+                      <span class="filter-count">{{ getLength(item.Name) }}</span>
+                    }
+                  </div>
+                }
+              </div>
+              <div class="taxonomy_filtration_section" *dxTemplate="let elem of 'item'">
+                @if (elem.items && elem.items.length > 0) {
+                  <dx-tree-view #treeview4 id="treeview" [items]="elem?.items" [showCheckBoxesMode]="'normal'" [selectionMode]="'multiple'" [selectNodesRecursive]="true" [selectByClick]="false" [searchEnabled]="true" [searchEditorOptions]="{ placeholder: 'Search within filters' }" searchMode="contains" [searchExpr]="['Name']" pageLoadMode="nextButton" (onSelectionChanged)="treeViewSelectionChanged($event, 'R')" (click)="ItemClicked($event)" [height]="300" class="modern-treeview">
+                    <div *dxTemplate="let item of 'item'" class="tree-item">
+                      {{ item.Name }}
+                    </div>
+                  </dx-tree-view>
+                }
+              </div>
+            </dx-accordion>
+          </div>
+        }
+      }
+
+      <!-- Base Year Section -->
+      @if (baseYear?.length !== 0 && baseYear[0]?.items?.length != 0) {
+        @if (baseYear.length !== 0) {
+          <div class="filter-section">
+            <dx-accordion #baseYearAccordion (onItemClick)="handleClick($event, 'Y')" [dataSource]="baseYear" [collapsible]="true" [multiple]="false" [animationDuration]="300" [selectedIndex]="-1" id="accordion-container" class="modern-accordion">
+              <div class="filter-name" *dxTemplate="let item of 'title'">
+                @if (item.items && item.items.length > 0) {
+                  <div class="accordion-title-wrapper">
+                    <span class="accordion-title">{{ item.Name }}</span>
+                    @if (getLength(item.Name) !== 0) {
+                      <span class="filter-count">{{ getLength(item.Name) }}</span>
+                    }
+                  </div>
+                }
+              </div>
+              <div class="taxonomy_filtration_section" *dxTemplate="let elem of 'item'">
+                @if (elem.items && elem.items.length > 0) {
+                  <dx-tree-view #treeview2 id="treeview" [items]="elem?.items" [showCheckBoxesMode]="'normal'" [selectionMode]="'multiple'" [selectNodesRecursive]="true" [selectByClick]="false" [searchEnabled]="true" [searchEditorOptions]="{ placeholder: 'Search within filters' }" searchMode="contains" [searchExpr]="['Name']" pageLoadMode="nextButton" (onSelectionChanged)="treeViewSelectionChanged($event, 'B')" (click)="ItemClicked($event)" [height]="300" class="modern-treeview">
+                    <div *dxTemplate="let item of 'item'" class="tree-item">
+                      {{ item.Name }}
+                    </div>
+                  </dx-tree-view>
+                }
+              </div>
+            </dx-accordion>
+          </div>
+        }
+      }
+
+      <!-- Date Selection Section -->
+      <div class="date-selection">
+        <input
+          type="text"
+          style="position: relative; padding-left: 7px; background: #f2f2f2 !important; height: 44.2px; border: 0px solid #f2f2f2 !important; width: 100% !important; padding-bottom: 12px; border-top: 1px solid #dfdcdc !important; font-size: 12px; font-weight: 600"
+          ngxDaterangepickerMd
+          [(ngModel)]="selectedDate"
+          (change)="onSelectedChange($event)"
+          [showCustomRangeLabel]="true"
+          [alwaysShowCalendars]="alwaysShowCalendars"
+          [ranges]="ranges"
+          [linkedCalendars]="true"
+          [showClearButton]="false"
+          placeholder="Released Date"
+          [isInvalidDate]="isInvalidDate"
+          [autoApply]="false"
+          (click)="onDateClick()"
+          />
+      </div>
+
+      <!-- Reset Filters Section -->
+      <div class="reset-filters-section">
+        <div class="reset-filters-wrapper">
+          @if (selectedDate ? selectedDate.endDate !== null : false) {
+            <button class="reset-date-btn" (click)="clearDate()">Reset Date</button>
+          }
+          <button class="reset-filters-btn" (click)="clearFilterHendleClick()">Reset Filters</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,723 @@
+@import "../../../../../assets/scss/variables";
+
+.layout-wrapper {
+  // margin-top: 7.8rem;
+}
+
+::ng-deep {
+  ngx-daterangepicker-material {
+    & {
+      .md-drppicker {
+        position: absolute;
+        top: 0 !important;
+        left: 0 !important;
+        width: 38rem !important;
+      }
+    }
+  }
+}
+
+.date-selection {
+  position: relative;
+  border-top: 1px solid #e0e0e0;
+  
+  div.md-drppicker {
+    position: absolute;
+    top: 0 !important;
+    left: 0 !important;
+    width: 38rem !important;
+    background-color: red;
+  }
+
+  input {
+    background: #ffffff !important;
+    border: none !important;
+    border-bottom: 1px solid #e0e0e0 !important;
+    padding: 12px 16px !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    color: #333 !important;
+    
+    &::placeholder {
+      color: #666;
+      font-weight: 400;
+    }
+  }
+}
+
+.left-nav {
+  padding: 8px;
+}
+
+.collapsable-part {
+  position: fixed;
+  bottom: 0;
+  width: 186px;
+  z-index: 2;
+  top: 115px;
+
+  &.closed {
+    > div {
+      display: none;
+      &.draggingItem {
+        display: block;
+        width: 220px;
+      }
+    }
+    &.fullyClosed {
+      > div {
+        display: none !important;
+        &.draggingItem {
+          display: block;
+          width: 220px;
+        }
+      }
+    }
+  }
+  .clear_all_filters {
+    cursor: pointer;
+    color: #45bb43;
+    padding: 5px;
+    text-align: right;
+    font-size: 11px;
+    font-weight: 500;
+  }
+}
+
+.filter-header {
+  height: 50px !important;
+  background-color: #253542 !important;
+  color: #1e84b1 !important;
+  text-align: center !important;
+  padding-top: 15px !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  vertical-align: middle !important;
+  border-top: 1px solid #0c2b57;
+}
+
+.monitoring-search-results-body-content-filtering {
+  background-color: white;
+  overflow-y: auto !important;
+  height: calc(100vh - 117px);
+  padding: 0;
+  box-shadow: rgb(226 226 226 / 2%) 0px 1px 3px 0px, rgb(159 207 253 / 15%) 0px 0px 0px 1px;
+  display: block;
+
+  &::-webkit-scrollbar {
+    height: 3px;
+    width: 3px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #868686;
+    height: 3px;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #dedede81;
+    border-radius: 10px;
+  }
+
+  &.bigHeight {
+    max-height: 684px;
+  }
+}
+
+// Filter Section Styling
+.filter-section {
+  border-bottom: 1px solid #e0e0e0;
+  
+  .section-header {
+    padding: 16px 20px 8px;
+    
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+      margin: 0;
+    }
+  }
+}
+
+// Modern Accordion Styling
+.modern-accordion {
+  ::ng-deep {
+    .dx-accordion-item {
+      border: none !important;
+      background: white;
+      
+      &:not(:last-child) {
+        border-bottom: 1px solid #e0e0e0 !important;
+      }
+      
+      .dx-accordion-item-title {
+        background: #f8f9fa !important;
+        border: none !important;
+        padding: 12px 20px !important;
+        min-height: auto !important;
+        
+        &:hover {
+          background: #e9ecef !important;
+        }
+        
+        &::before {
+          color: #666 !important;
+          font-size: 14px !important;
+        }
+      }
+      
+      .dx-accordion-item-body {
+        padding: 0 !important;
+        border: none !important;
+      }
+      
+      &.dx-accordion-item-opened {
+        .dx-accordion-item-title {
+          background: #e3f2fd !important;
+          border-bottom: 1px solid #e0e0e0 !important;
+        }
+      }
+    }
+  }
+}
+
+// Accordion Title Wrapper
+.accordion-title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  
+  .accordion-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    flex: 1;
+  }
+  
+  .filter-count {
+    background: #2196f3;
+    color: white;
+    border-radius: 12px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 500;
+    min-width: 20px;
+    text-align: center;
+  }
+}
+
+// Subindustries Section
+.subindustries-section {
+  padding: 16px 20px;
+  background: white;
+  
+  .subindustries-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+    margin: 0 0 12px 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+}
+
+// Modern TreeView Styling
+.modern-treeview {
+  ::ng-deep {
+    .dx-treeview {
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+    }
+    
+    .dx-treeview-item {
+      padding: 8px 12px !important;
+      border-bottom: 1px solid #f5f5f5;
+      
+      &:hover {
+        background: #f8f9fa !important;
+      }
+      
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+    
+    .dx-treeview-item-content {
+      font-size: 13px !important;
+      color: #333 !important;
+      padding: 4px 0 !important;
+    }
+    
+    // Checkbox Styling to match second image
+    .dx-checkbox {
+      margin-right: 8px;
+      
+      .dx-checkbox-icon {
+        width: 16px !important;
+        height: 16px !important;
+        border: 2px solid #ddd !important;
+        border-radius: 3px !important;
+        background: white !important;
+        
+        &::before {
+          font-size: 10px !important;
+          color: white !important;
+        }
+      }
+      
+      &.dx-checkbox-checked {
+        .dx-checkbox-icon {
+          background: #2196f3 !important;
+          border-color: #2196f3 !important;
+          
+          &::before {
+            content: "✓" !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+          }
+        }
+      }
+    }
+    
+    // Search box styling
+    .dx-texteditor {
+      margin-bottom: 12px;
+      
+      .dx-texteditor-input {
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+        border: 1px solid #ddd !important;
+        border-radius: 4px !important;
+        
+        &::placeholder {
+          color: #999 !important;
+        }
+      }
+    }
+    
+    // Tree toggle icons
+    .dx-treeview-toggle-item-visibility {
+      color: #666 !important;
+      
+      &:hover {
+        color: #333 !important;
+      }
+    }
+  }
+}
+
+// Tree Item Styling
+.tree-item {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: #333;
+}
+
+// Reset Filters Section
+.reset-filters-section {
+  border-top: 1px solid #e0e0e0;
+  background: #f8f9fa;
+  
+  .reset-filters-wrapper {
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    
+    .reset-date-btn,
+    .reset-filters-btn {
+      background: none;
+      border: none;
+      color: #2196f3;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        background: #e3f2fd;
+        color: #1976d2;
+      }
+    }
+    
+    .reset-filters-btn {
+      margin-left: auto;
+    }
+  }
+}
+
+// Toggle Filter Button
+.toggle-filter {
+  position: absolute;
+  left: 99%;
+  background-color: #27628e;
+  border: solid 1px #0c2b57;
+  color: #fff;
+  height: 50px;
+  z-index: 100;
+  border-radius: 0;
+  
+  &:hover {
+    background-color: #1e4f73;
+  }
+}
+
+// Filter Container
+.filter-container {
+  position: relative;
+  background: white;
+  height: 100%;
+  overflow-y: auto;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+    
+    &:hover {
+      background: #a8a8a8;
+    }
+  }
+}
+
+// Left Sidebar
+.left-sidebar {
+  width: 320px;
+  background: white;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 10;
+  
+  &.filter {
+    height: 100vh;
+    overflow: hidden;
+  }
+}
+
+// Responsive Design
+@media screen and (max-width: 920px) {
+  .filter {
+    position: fixed;
+    z-index: 1000;
+    top: 22%;
+    width: 14rem;
+  }
+  
+  .filter-container {
+    position: relative;
+  }
+  
+  .toggle-filter {
+    position: absolute;
+    left: 99%;
+    background-color: #27628e;
+    border: solid 1px #0c2b57;
+    color: #fff;
+    height: 50px;
+    z-index: 100;
+  }
+
+  .left-sidebar {
+    transition: all 0.5s ease-in-out;
+  }
+
+  .slide-out {
+    transform: translateX(-100%);
+  }
+
+  .slide-in {
+    transform: translateX(0);
+  }
+
+  .filter-header {
+    border-top-right-radius: 0;
+  }
+
+  .toggle-filter {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .layout-wrapper {
+    margin-top: 7.8rem;
+  }
+  
+  .filter {
+    position: fixed;
+    z-index: 1000;
+    top: 22%;
+    width: 14rem;
+  }
+}
+
+// Large Screen Adjustments
+@media screen and (min-width: 1990px) {
+  .toggle-filter {
+    position: relative !important;
+    left: -40px !important;
+  }
+}
+
+// Extra Large Screen Adjustments
+@media screen and (min-width: 3500px) {
+  .layout-wrapper {
+    .filter-header {
+      font-size: 4rem !important;
+      height: 4rem !important;
+      padding: 8rem;
+    }
+
+    .reset-filters-section {
+      .reset-filters-wrapper {
+        padding: 2rem;
+        
+        .reset-date-btn,
+        .reset-filters-btn {
+          font-size: 3rem;
+          padding: 1.2rem 1.8rem;
+        }
+      }
+    }
+
+    .date-selection {
+      input {
+        font-size: 3.4rem !important;
+        padding: 2rem !important;
+      }
+    }
+
+    .modern-accordion {
+      ::ng-deep {
+        .dx-accordion-item-title {
+          padding: 2rem !important;
+          
+          &::before {
+            font-size: 43px;
+          }
+        }
+      }
+    }
+
+    .accordion-title-wrapper {
+      .accordion-title {
+        font-size: 3.4rem;
+      }
+      
+      .filter-count {
+        font-size: 2.2rem;
+        padding: 0.8rem 1.6rem;
+      }
+    }
+
+    .subindustries-section {
+      padding: 2rem;
+      
+      .subindustries-title {
+        font-size: 3rem;
+        margin-bottom: 2rem;
+      }
+    }
+
+    .modern-treeview {
+      ::ng-deep {
+        .dx-treeview-item {
+          padding: 1.5rem !important;
+        }
+        
+        .dx-treeview-item-content {
+          font-size: 2.4rem !important;
+        }
+        
+        .dx-texteditor-input {
+          padding: 1.2rem 1.6rem !important;
+          font-size: 3rem;
+        }
+      }
+    }
+  }
+}
+
+// Animation Keyframes
+@-webkit-keyframes slide-out-left {
+  0% {
+    position: relative;
+  }
+  100% {
+    position: absolute;
+  }
+}
+
+@keyframes slide-out-left {
+  0% {
+    position: relative;
+  }
+  100% {
+    position: absolute;
+  }
+}
+
+@-webkit-keyframes slide-out-top {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes slide-out-top {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes slide-in-top {
+  0% {
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-top {
+  0% {
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+// Legacy styles for backward compatibility
+.filter-name {
+  > p {
+    display: flex;
+    align-items: center;
+    > span {
+      background-color: #1da0d7;
+      color: white;
+      border-radius: 50px;
+      padding: 2px 5px 2px 5px;
+      font-size: 9px;
+      margin-left: 0.2rem;
+    }
+  }
+}
+
+// Additional DevExtreme overrides
+::ng-deep .dx-accordion-item-body {
+  overflow: hidden;
+  padding: 0;
+}
+
+::ng-deep .dx-scrollable-container {
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  transform: none;
+  border: 1px solid #e8e8e8 !important;
+  border-radius: 3px !important;
+}
+
+::ng-deep .dx-scrollbar-hoverable .dx-scrollable-scroll.dx-state-invisible .dx-scrollable-scroll-content {
+  background-color: #0c2b57 !important;
+  &:hover {
+    background-color: #cea92e !important;
+  }
+}
+
+::ng-deep .dx-daterangebox-separator .dx-icon {
+  width: 14px;
+  height: 14px;
+  background-position: 0 0;
+  background-size: 14px 14px;
+  padding: 0;
+  font-size: 14px;
+  text-align: center;
+  line-height: 14px;
+}
+
+::ng-deep .dx-texteditor-input {
+  padding: 6px 8px 8px;
+  min-height: 30px;
+}
+
+::ng-deep .dx-daterangebox-separator {
+  display: flex;
+  align-items: center;
+  padding-left: 4px;
+  color: #999;
+}
+
+::ng-deep .dx-daterangebox .dx-dropdowneditor-button .dx-dropdowneditor-icon {
+  width: 100%;
+}
+
+::ng-deep .dx-daterangebox .dx-dropdowneditor-icon {
+  font: 15px / 16px DXIcons;
+}
+
+::ng-deep .dx-treeview-toggle-item-visibility {
+  font: 16px / 1 DXIcons;
+}
+
+::ng-deep .dx-list-item {
+  font-size: 10px;
+}
