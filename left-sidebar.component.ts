@@ -429,6 +429,9 @@ export class LeftSidebarComponent {
 
     if (this.industry.length === 0 && this.Region.length === 0 && this.baseYear.length === 0) {
       this.getCategories();
+    } else {
+      // Restore selections from local storage on page refresh
+      this.restoreSelectionsFromStorage();
     }
    
   }
@@ -479,7 +482,6 @@ export class LeftSidebarComponent {
       this.sessionOrlocalStorageService.setData("categoryData", this.finallyData);
       this.updateFinallyData();
 
-
       this.SearchSync.setFinallyData(this.finallyData);
       this.selectedFilterItem = JSON.parse(this.sessionOrlocalStorageService.getData("selectedFilterItem"));
       if (this.selectedFilterItem && this.selectedFilterItem.length > 0) {
@@ -488,6 +490,27 @@ export class LeftSidebarComponent {
       }
       // this.restoreSelectedFilters();
     });
+  }
+
+  // Method to restore selections from local storage on page refresh
+  restoreSelectionsFromStorage(): void {
+    const storedSelectedItems = this.sessionOrlocalStorageService.getData("selectedFilterItem");
+    if (storedSelectedItems) {
+      try {
+        this.selectedFilterItem = JSON.parse(storedSelectedItems);
+        if (this.selectedFilterItem && this.selectedFilterItem.length > 0) {
+          const categoryIds = this.selectedFilterItem.map((item: any) => item.Id);
+          
+          // Wait for data to be available before restoring selections
+          setTimeout(() => {
+            this.retainPreviouseSelectedNodes(categoryIds);
+          }, 100);
+        }
+      } catch (error) {
+        console.error("Error parsing stored filter items:", error);
+        this.selectedFilterItem = [];
+      }
+    }
   }
   @Output() onReleaseDateSearch = new EventEmitter();
 
@@ -891,6 +914,9 @@ export class LeftSidebarComponent {
       this.Region = [...this.Region];
       this.finallyData = [...this.finallyData];
       this.SearchSync.setFinallyData(this.finallyData);
+      
+      // Restore selections from local storage after data is updated
+      this.restoreSelectionsFromStorage();
     }
   }
 
