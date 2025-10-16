@@ -1389,10 +1389,22 @@ removeFilterByParent(parentName: string): void {
   // Update local storage with new selectedFilterItem (same as treeViewSelectionChanged does)
   this.sessionOrlocalStorageService.setData("selectedFilterItem", this.selectedFilterItem);
   
+  // Create a proper mock event structure that matches what the parent component expects
+  const mockEvent = {
+    component: {
+      _dataAdapter: {
+        _selectedNodesKeys: [],
+        _dataStructure: []
+      },
+      getSelectedNodes: () => [],
+      getSelectedNodeKeys: () => []
+    }
+  };
+  
   // Emit filter change to trigger new search (same as treeViewSelectionChanged does)
   this.filterItems.emit({ 
-    e: { component: { _dataAdapter: { _selectedNodesKeys: [] } } }, 
-    type: 'PILL_REMOVE' 
+    e: mockEvent, 
+    type: 'I' 
   });
 }
 
