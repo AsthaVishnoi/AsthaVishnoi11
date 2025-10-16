@@ -1385,6 +1385,15 @@ removeFilterByParent(parentName: string): void {
 
   this.filterlength(this.finallyData);
   this.updateComponentState();
+  
+  // Update local storage with new selectedFilterItem (same as treeViewSelectionChanged does)
+  this.sessionOrlocalStorageService.setData("selectedFilterItem", this.selectedFilterItem);
+  
+  // Emit filter change to trigger new search (same as treeViewSelectionChanged does)
+  this.filterItems.emit({ 
+    e: { component: { _dataAdapter: { _selectedNodesKeys: [] } } }, 
+    type: 'PILL_REMOVE' 
+  });
 }
 
 }
