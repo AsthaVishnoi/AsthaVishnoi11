@@ -1,0 +1,155 @@
+<div class="layout-wrapper">
+  <div class="left-sidebar filter" [class]="{ 'slide-in': showFilter, 'slide-out': !showFilter }">
+    <div class="filter-container">
+      <div id="left-sidebar-top"></div>
+        <!-- Selected Pills (insert directly after #left-sidebar-top) -->
+<div class="selected-pills" *ngIf="getSelectedParentNames().length">
+  <div class="pills-wrapper">
+    <div class="pill" *ngFor="let p of getSelectedParentNames()">
+      <span class="pill-label">{{ p }}</span>
+      <button class="pill-close" (click)="removeFilterByParent(p)" [attr.aria-label]="'Remove filter ' + p">×</button>
+    </div>
+  </div>
+</div>
+ <!-- Reset Filters Section - Moved to Top -->
+      <div class="reset-filters-section-top">
+        <div class="reset-filters-wrapper">
+          <button class="reset-filters-btn" (click)="clearFilterHendleClick()">Reset Filters</button>
+        </div>
+      </div>
+      
+      <!-- All Industries Section -->
+      <div class="all-industries-section">
+        <button class="all-industries-btn" (click)="selectAllIndustries()" 
+                [class.active]="isAllIndustriesSelected()">
+          <span class="btn-icon">🏭</span>
+          All Industries
+        </button>
+      </div>
+     
+
+      <!-- Subindustries Section -->
+      @if (industry?.length !== 0 && industry[0]?.items?.length != 0) {
+        @if (industry.length !== 0) {
+          <div class="filter-section">
+            <dx-accordion #industryAccordion (onItemClick)="handleClick($event, 'I')" [dataSource]="industry" [collapsible]="true" [multiple]="false" [animationDuration]="300" [selectedIndex]="topicActive ? 0 : -1" id="accordion-container" class="modern-accordion">
+              <div class="filter-name" *dxTemplate="let item of 'title'">
+                @if (item.items && item.items.length > 0) {
+                  <div class="accordion-title-wrapper">
+                    <span class="accordion-title">Subindustries</span>
+                    <div class="accordion-arrow">
+                      <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1.5L6 6.5L11 1.5" stroke="#666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                  </div>
+                }
+              </div>
+              <div class="taxonomy_filtration_section" *dxTemplate="let elem of 'item'">
+                @if (elem.items && elem.items.length > 0) {
+                  <div class="subindustries-content">
+                    <dx-tree-view #treeview1 id="treeview" [items]="elem.items[0]?.items || elem.items" [showCheckBoxesMode]="'normal'" [selectionMode]="'multiple'" [selectNodesRecursive]="true" [selectByClick]="false" [searchEnabled]="false" pageLoadMode="nextButton" (onSelectionChanged)="treeViewSelectionChanged($event, 'I')" (click)="ItemClicked($event)" [height]="300" class="modern-treeview">
+                      <div *dxTemplate="let item of 'item'" class="tree-item">
+                        {{ item.Name }}
+                      </div>
+                    </dx-tree-view>
+                  </div>
+                }
+              </div>
+            </dx-accordion>
+          </div>
+        }
+      }
+
+      <!-- Regions & Markets Section -->
+      @if (Region?.length !== 0 && Region[0]?.items?.length != 0) {
+        @if (Region.length !== 0) {
+          <div class="filter-section">
+            <dx-accordion #regionAccordion [dataSource]="Region" (onItemClick)="handleClick($event, 'R')" [collapsible]="true" [multiple]="false" [animationDuration]="300" [selectedIndex]="geographyActive ? 0 : -1" id="accordion-container" class="modern-accordion">
+              <div class="filter-name" *dxTemplate="let item of 'title'">
+                @if (item.items && item.items.length > 0) {
+                  <div class="accordion-title-wrapper">
+                    <span class="accordion-title">Regions and Markets</span>
+                    <div class="accordion-arrow">
+                      <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1.5L6 6.5L11 1.5" stroke="#666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                  </div>
+                }
+              </div>
+              <div class="taxonomy_filtration_section" *dxTemplate="let elem of 'item'">
+                @if (elem.items && elem.items.length > 0) {
+                  <dx-tree-view #treeview4 id="treeview" [items]="elem.items[0]?.items || elem.items" [showCheckBoxesMode]="'normal'" [selectionMode]="'multiple'" [selectNodesRecursive]="true" [selectByClick]="false" [searchEnabled]="false" pageLoadMode="nextButton" (onSelectionChanged)="treeViewSelectionChanged($event, 'R')" (click)="ItemClicked($event)" [height]="300" class="modern-treeview">
+                    <div *dxTemplate="let item of 'item'" class="tree-item">
+                      {{ item.Name }}
+                    </div>
+                  </dx-tree-view>
+                }
+              </div>
+            </dx-accordion>
+          </div>
+        }
+      }
+
+      <!-- Base Year Section -->
+      @if (baseYear?.length !== 0 && baseYear[0]?.items?.length != 0) {
+        @if (baseYear.length !== 0) {
+          <div class="filter-section">
+            <dx-accordion #baseYearAccordion (onItemClick)="handleClick($event, 'Y')" [dataSource]="baseYear" [collapsible]="true" [multiple]="false" [animationDuration]="300" [selectedIndex]="-1" id="accordion-container" class="modern-accordion">
+              <div class="filter-name" *dxTemplate="let item of 'title'">
+                @if (item.items && item.items.length > 0) {
+                  <div class="accordion-title-wrapper">
+                    <span class="accordion-title">{{ item.Name }}</span>
+                    <div class="accordion-arrow">
+                      <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1.5L6 6.5L11 1.5" stroke="#666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                  </div>
+                }
+              </div>
+              <div class="taxonomy_filtration_section" *dxTemplate="let elem of 'item'">
+                @if (elem.items && elem.items.length > 0) {
+                  <dx-tree-view #treeview2 id="treeview" [items]="elem?.items" [showCheckBoxesMode]="'normal'" [selectionMode]="'multiple'" [selectNodesRecursive]="true" [selectByClick]="false" [searchEnabled]="false" pageLoadMode="nextButton" (onSelectionChanged)="treeViewSelectionChanged($event, 'B')" (click)="ItemClicked($event)" [height]="300" class="modern-treeview">
+                    <div *dxTemplate="let item of 'item'" class="tree-item">
+                      {{ item.Name }}
+                    </div>
+                  </dx-tree-view>
+                }
+              </div>
+            </dx-accordion>
+          </div>
+        }
+      }
+
+      <!-- Date Selection Section -->
+      <div class="date-selection">
+        <input
+          type="text"
+          style="position: relative; padding-left: 7px; background: #f2f2f2 !important; height: 44.2px; border: 0px solid #f2f2f2 !important; width: 100% !important; padding-bottom: 12px; border-top: 1px solid #dfdcdc !important; font-size: 12px; font-weight: 600"
+          ngxDaterangepickerMd
+          [(ngModel)]="selectedDate"
+          (change)="onSelectedChange($event)"
+          [showCustomRangeLabel]="true"
+          [alwaysShowCalendars]="alwaysShowCalendars"
+          [ranges]="ranges"
+          [linkedCalendars]="true"
+          [showClearButton]="false"
+          placeholder="Released Date"
+          [isInvalidDate]="isInvalidDate"
+          [autoApply]="false"
+          (click)="onDateClick()"
+          />
+      </div>
+
+      <!-- Reset Date Section -->
+      @if (selectedDate ? selectedDate.endDate !== null : false) {
+        <div class="reset-date-section">
+          <div class="reset-date-wrapper">
+            <button class="reset-date-btn" (click)="clearDate()">Reset Date</button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
