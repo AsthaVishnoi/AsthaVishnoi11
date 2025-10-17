@@ -1,0 +1,106 @@
+<!-- Webinar List Component Template -->
+<div class="webinar-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <h2 class="title">Upcoming Webinars</h2>
+    <button 
+      class="refresh-btn" 
+      (click)="refreshWebinars()" 
+      [disabled]="loading"
+      title="Refresh webinar data">
+      <i class="refresh-icon" [class.spinning]="loading">🔄</i>
+      Refresh
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Loading webinars...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-container">
+    <div class="error-message">
+      <i class="error-icon">⚠️</i>
+      <p>{{ error }}</p>
+      <button class="retry-btn" (click)="loadWebinars()">Try Again</button>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && !error && webinars.length === 0" class="empty-container">
+    <div class="empty-message">
+      <i class="empty-icon">📅</i>
+      <h3>No Upcoming Webinars</h3>
+      <p>There are currently no upcoming webinars scheduled.</p>
+      <button class="refresh-btn" (click)="refreshWebinars()">Check for Updates</button>
+    </div>
+  </div>
+
+  <!-- Webinars List -->
+  <div *ngIf="!loading && !error && webinars.length > 0" class="webinars-grid">
+    <div 
+      *ngFor="let webinar of webinars; trackBy: trackByWebinarId" 
+      class="webinar-card"
+      [class.happening-soon]="isHappeningSoon(webinar.date)">
+      
+      <!-- Webinar Image -->
+      <div class="webinar-image">
+        <img 
+          [src]="webinar.imageUrl || 'assets/default-webinar-image.jpg'" 
+          [alt]="webinar.title"
+          (error)="$event.target.src='assets/default-webinar-image.jpg'">
+        
+        <!-- Happening Soon Badge -->
+        <div *ngIf="isHappeningSoon(webinar.date)" class="soon-badge">
+          Happening Soon!
+        </div>
+      </div>
+
+      <!-- Webinar Content -->
+      <div class="webinar-content">
+        <h3 class="webinar-title">{{ webinar.title }}</h3>
+        
+        <div class="webinar-date">
+          <i class="date-icon">📅</i>
+          <span>{{ formatDate(webinar.date) }}</span>
+        </div>
+
+        <div class="webinar-description" [innerHTML]="webinar.description | slice:0:200">
+        </div>
+        
+        <div *ngIf="webinar.description.length > 200" class="read-more">
+          <a [href]="webinar.url" target="_blank">Read more...</a>
+        </div>
+      </div>
+
+      <!-- Webinar Actions -->
+      <div class="webinar-actions">
+        <button 
+          *ngIf="webinar.registrationUrl" 
+          class="register-btn primary"
+          (click)="openRegistration(webinar.registrationUrl)">
+          Register Now
+        </button>
+        
+        <a 
+          *ngIf="webinar.url" 
+          [href]="webinar.url" 
+          target="_blank" 
+          class="learn-more-btn secondary">
+          Learn More
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Info -->
+  <div *ngIf="webinars.length > 0" class="footer-info">
+    <p>
+      <i class="info-icon">ℹ️</i>
+      Showing {{ webinars.length }} upcoming webinar{{ webinars.length !== 1 ? 's' : '' }}
+    </p>
+    <small>Data is updated monthly and cached for optimal performance.</small>
+  </div>
+</div>
